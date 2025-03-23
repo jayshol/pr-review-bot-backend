@@ -28,8 +28,6 @@ router.post('/github-webhook', express.json(), async (req, res) => {
         // Post comments to GitHub
         await postReviewComments(owner, repo, prNumber, reviewComments);
     }
-
-    res.sendStatus(200);
 });
 
 async function fetchPRFiles(owner, repo, prNumber) {
