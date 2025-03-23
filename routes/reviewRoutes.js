@@ -11,7 +11,7 @@ const chatModel = new ChatOpenAI({
 
 router.post("/", async (req, res) => {
   const { code } = req.body;
-  console.log({code});
+ 
   if (!code) {
     return res.status(400).json({ error: "Code is required." });
   }
@@ -50,9 +50,7 @@ router.post("/savereview", async (req, res) => {
       await existingReview.save();
       return res.json({ message: "Review updated", review: existingReview });
     }
-    console.log(prId, fileName);
-    console.log(fileContent);
-    console.log(reviewComments);
+
     const newReview = new PRReview({ prId, fileName, fileContent, reviewComments });
     await newReview.save();
     res.json({ message: "Review saved", review: newReview });
@@ -63,10 +61,9 @@ router.post("/savereview", async (req, res) => {
 
 
 router.get("/prs", async (req, res) => {
- // console.log("here");
+
   try {
     const reviews = await PRReview.find().sort({ timestamp: -1 });
-    console.log(reviews);
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ error: "Error fetching PRs" });

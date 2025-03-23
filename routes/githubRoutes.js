@@ -5,10 +5,9 @@ import fetch from 'node-fetch';
 const router = express.Router();
 
 router.post('/github-webhook', express.json(), async (req, res) => {
-   // console.log("Webhook received:", req.body);
     const event = req.headers['x-github-event'];
     const payload = req.body;
-    console.log('event', event)
+    
     if (event === 'pull_request' && (payload.action === 'opened' || payload.action === 'reopened')) {
         const { repository, pull_request } = payload;
         const owner = repository.owner.login;
@@ -30,22 +29,6 @@ router.post('/github-webhook', express.json(), async (req, res) => {
 
     res.sendStatus(200);
 });
-
-// async function fetchPRFiles(owner, repo, prNumber) {
-//     const url = `https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/files`;
-//     const response = await fetch(url, {
-//         headers: { Authorization: `token ${process.env.GITHUB_ACCESS_TOKEN}`},
-//     });
-
-//     if (!response.ok) return null;
-
-//     const files = await response.json();
-//     console.log({files});
-//     return files.map(file => ({
-//         name: file.filename,
-//         content_url: file.raw_url,
-//     }));
-// }
 
 async function fetchPRFiles(owner, repo, prNumber) {
     const url = `https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/files`;

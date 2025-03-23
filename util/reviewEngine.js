@@ -29,7 +29,6 @@ async function analyzeFile(file) {
       Do NOT include any extra text before or after the JSON response.`],
       ["human", "{code}"], // Placeholder for actual code input
     ]);
-    console.log(typeof(file));
 
     // Ensure `code` is properly defined before formatting
     if (!file || typeof file.content !== "string") {
@@ -38,14 +37,12 @@ async function analyzeFile(file) {
     if (!file.content.trim()) {
       throw new Error(`File ${file.name} has empty content`);
     }
-    console.log("File content preview:", file.content.slice(0, 200));
 
     const sanitizedContent = file.content.replace(/[^\x00-\x7F]/g, ""); // Remove non-ASCII chars
     // Format the prompt correctly
     //const formattedPrompt = await prompt.format({ code: sanitizedContent });
     const formattedPrompt = await prompt.format({ code: sanitizedContent});
 
-    console.log("Formatted Prompt:", formattedPrompt);
     // Send the prompt to OpenAI via LangChain
     const response = await chatModel.invoke(formattedPrompt);
 
