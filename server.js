@@ -23,8 +23,14 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(cors({
   origin: ["http://localhost:3000", "https://pr-review-bot-frontend.vercel.app"], // Add your frontend URL here
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+//  Handle CORS preflight requests explicitly
+app.options("*", (req, res) => {
+  res.status(200).send(); // Ensure preflight requests get a proper response
+});
+
 app.use(json());
 app.use(urlencoded({ extended: true })); // Parse URL-encoded requests
 
