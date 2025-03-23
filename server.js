@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 5001; // Change from 5000 to 5001
 
 
-mongoose.connect("mongodb://localhost:27017/prReviewBot", {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log("MongoDB connected"))
