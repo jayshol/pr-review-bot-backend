@@ -20,7 +20,11 @@ mongoose.connect("mongodb://localhost:27017/prReviewBot", {
 
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000", "https://pr-review-bot-frontend.vercel.app"], // Add your frontend URL here
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(json());
 app.use(urlencoded({ extended: true })); // Parse URL-encoded requests
 
