@@ -5,6 +5,8 @@ import fetch from 'node-fetch';
 const router = express.Router();
 
 router.post('/github-webhook', express.json(), async (req, res) => {
+    // Respond immediately to prevent GitHub timeout
+    res.status(200).json({ message: "Webhook received successfully" });
     const event = req.headers['x-github-event'];
     const payload = req.body;
     
